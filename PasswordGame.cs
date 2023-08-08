@@ -269,6 +269,13 @@ public class PasswordGame : EditorWindow
         if (distractionPreview == null)
         {
             distractionClip = AssetDatabase.LoadAssetAtPath<AnimationClip>("Assets/Distraction.anim");
+            if (distractionClip == null)
+            {
+                distractionClip = AssetDatabase
+                    .FindAssets("t:AnimationClip")
+                    .Select(x => AssetDatabase.LoadAssetAtPath<AnimationClip>(AssetDatabase.GUIDToAssetPath(x)))
+                    .FirstOrDefault(x => x.name == "Distraction");
+            }
             distractionPreview = Editor.CreateEditor(distractionClip);
         }
 
