@@ -4,10 +4,6 @@ using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Animations;
-using UnityEngine.UI;
-using VRC.Core;
-using VRC.Core.Pool;
 
 public class PasswordGame : EditorWindow
 {
@@ -97,7 +93,12 @@ public class PasswordGame : EditorWindow
             }
         }
 
-        return (false, "You're not blue :(");
+        if (renderers.Length > 0)
+        {
+            return (false, "You have a thing, but it's not blue (i'm a dumb script, use default material)");
+        }
+
+        return (false, "Your don't have any blue in your scene :(");
     }
 
     public static (bool, string) HaveAtMaxTwoChildren()
@@ -198,7 +199,7 @@ public class PasswordGame : EditorWindow
 
     private static (bool, string) WindowFitsAspectRatio(float initwidth, float initheight, float width, float height) 
     {
-        string message = $"Fits the aspect ratio {width}:{height}.";
+        string message = $"Game fits the aspect ratio {width}:{height}.";
         bool passed = Math.Abs((initwidth/initheight) - (width/height)) < 0.01f;
         return (passed, message);
     }
